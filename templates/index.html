@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Wallet app | {{ request.user }}</h1> <a href="{% url 'logout-url' %}">Chiqish</a>
+<p>Balance: {{ wallet.balance }}</p>
+<hr>
+<form action="{% url 'index-url' %}" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">PULNI O'TQIZISH</button>
+</form>
+<div>
+    <h1>Tranzaksiyalar</h1>
+    {% if transactions %}
+        {% for transaction in transactions %}
+            <p>{{ transaction.from_wallet.user.phone_number }} - {{ transaction.to_wallet.user.phone_number }} - {{ transaction.amount }} so'm  ({{ transaction.created_at }})</p>
+        {% endfor %}
+    {% else %}
+        <p>Kechirasiz sizda tranzaksiyalar mavjud emas</p>
+    {% endif %}
+</div>
+</body>
+</html>
